@@ -4,11 +4,37 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static java.util.stream.Collectors.toSet;
+
 @Component
 class CitiesSearch {
 
+    private static final Set<String> AVAILABLE_CITIES = Set.of(
+            "Paris",
+            "Budapest",
+            "Skopje",
+            "Rotterdam",
+            "Valencia",
+            "Vancouver",
+            "Amsterdam",
+            "Vienna",
+            "Sydney",
+            "New York City",
+            "London",
+            "Bangkok",
+            "Hong Kong",
+            "Dubai",
+            "Rome",
+            "Istanbul"
+    );
+
     Set<String> search(String inputText) {
-        throw new RuntimeException("Not implemented yet");
+        if (inputText == null) return Set.of();
+        else if(inputText.equals("*")) return AVAILABLE_CITIES;
+        else if (inputText.length() < 2) return Set.of();
+        return AVAILABLE_CITIES.stream()
+                .filter(cityName -> cityName.toLowerCase().contains(inputText.toLowerCase()))
+                .collect(toSet());
     }
 
 }
